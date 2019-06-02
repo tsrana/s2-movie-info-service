@@ -1,6 +1,5 @@
 echo "Start"
 PS=`sudo docker ps --filter publish=8082 -q`
-#PS=1
 echo "$PS"
 if [ "$PS" != "" ]
 then
