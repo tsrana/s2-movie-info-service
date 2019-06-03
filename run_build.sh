@@ -1,6 +1,6 @@
 echo "Start"
 PS=`sudo docker ps --filter publish=8082 -q`
-echo "$PS"
+#echo "$PS"
 if [ "$PS" != "" ]
 then
 	echo "Stoping container --"
