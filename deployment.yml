@@ -1,0 +1,37 @@
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: s2-movie-info-service-service
+spec:
+  selector:
+    app: s2-movie-info-service
+  ports:
+    - protocol: "TCP"
+      # Port accessible inside cluster
+      port: 8082
+      # Port to forward to inside the pod
+      targetPort: 8082
+      # Port accessible outside cluster
+      nodePort: 30082
+  type: LoadBalancer
+
+
+
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: s2-movie-info-service-deployment
+spec:
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: s2-movie-info-service
+    spec:
+      containers:
+        - name: s2-movie-info-service
+          image: tsrana1/s2-movie-info-service:v1 
+          ports:
+            - containerPort: 8082

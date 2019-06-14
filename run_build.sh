@@ -1,15 +1,10 @@
 echo "Start"
-PS=`sudo docker ps --filter publish=8082 -q`
-#echo "$PS"
-if [ "$PS" != "" ]
-then
-	echo "Stoping container --"
-	sudo docker stop "$PS"
-	echo "Removing Previous Image --"
-	sudo docker rmi $(sudo docker images s2-movie-info-service -q)
-fi
+IMAGE_NAME="tsrana1/s2-movie-info-service:${BUILD_NUMBER}"
 echo "Creating Image..."
-sudo docker build -t s2-movie-info-service .
-echo "Staring container..."	
-sudo docker run -it -d -p 8082:8082 s2-movie-info-service	
+sudo docker build -t $IMAGE_NAME .
+sudo docker login -u tsrana1 -p${DOCKER_HUB}
+sudo docker push $IMAGE_NAME
+echo "Deploying Image to Kubernetes..."
+export KUBECONFIG=/home/ubuntu/kubeconfig/kubeConfig/kube-config-mil01-rana-cluster.yml
+kubectl set image deployment.v1beta1.extensions/s2-movie-info-service-deployment s2-movie-info-service=$IMAGE_NAME
 echo "End"

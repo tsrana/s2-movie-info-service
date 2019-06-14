@@ -8,6 +8,6 @@ eureka:
       fetchRegistry: true
       registryFetchIntervalSeconds: 5
       serviceUrl:
-         defaultZone: ${EUREKA_URI:http://ec2-52-14-205-125.us-east-2.compute.amazonaws.com:8761/eureka/}
+         defaultZone: ${EUREKA_URI:http://159.122.174.183:30761/eureka/}
    instance:
       preferIpAddress: true
